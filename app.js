@@ -1,107 +1,61 @@
 // ===================================
 // The Echo Box - Complete JavaScript
-// Version: 3.0 Production
+// Version: 4.0 FINAL - Smart Domain Detection
 // Last Updated: January 2026
 // ===================================
 
 document.addEventListener('DOMContentLoaded', () => {
-
     
     // =======================================================
-    // 1. 环境判官 (The Environment Judge)
-    // - 已为三个Vercel子域名配置了正确的Gumroad链接
+    // 1. 环境判官 (Smart Domain Detection)
     // =======================================================
-    const currentDomain = window.location.hostname;
-    
-    const themes = {
-        // --- 生产环境域名 (未来使用) ---
-        'the-echobox.com': { 
-            css: 'themes/theme-echobox.css',
-            title: 'The Echo Box',
-            subtitle: 'Leave an echo, not just a memory.',
-            placeholder: 'In the silence between your victories, what is the one truth you fear might die with you?',
-            buttonText: 'IMPRINT INTO ETERNITY',
-            gumroadLink: 'https://samzhu168.gumroad.com/l/fmrrxr',
-            certificateTitle: 'CERTIFICATE OF LEGACY'
-        },
-        'lovescribe.net': { 
-            css: 'themes/theme-lovescribe.css',
-            title: 'LoveScribe',
-            subtitle: 'Seal your love for the future.',
-            placeholder: 'If the world ended tomorrow, what is the one memory of us that you would want to save from the fire?',
-            buttonText: 'SEAL OUR VOW',
-            gumroadLink: 'https://samzhu168.gumroad.com/l/sjuokv',
-            certificateTitle: 'CERTIFICATE OF ETERNAL LOVE'
-        },
-        'futurebloom.io': {
-            css: 'themes/theme-futurebloom.css',
-            title: 'FutureBloom',
-            subtitle: 'A letter to your child\'s 18th birthday.',
-            placeholder: 'When they are old enough to understand, what is the courage you want them to find in your words?',
-            buttonText: 'SEND TO THE FUTURE',
-            gumroadLink: 'https://samzhu168.gumroad.com/l/htoqgu',
-            certificateTitle: 'LETTER TO THE FUTURE'
-        },
-
-        // --- Vercel 免费子域名 (当前使用) ---
-        'the-echo-box.vercel.app': {
-            css: 'themes/theme-echobox.css',
-            title: 'The Echo Box',
-            subtitle: 'Leave an echo, not just a memory.',
-            placeholder: 'In the silence between your victories...',
-            buttonText: 'IMPRINT INTO ETERNITY',
-            gumroadLink: 'https://samzhu168.gumroad.com/l/fmrrxr',
-            certificateTitle: 'CERTIFICATE OF LEGACY'
-        },
-        'lovescribe-app.vercel.app': {
-            css: 'themes/theme-lovescribe.css',
-            title: 'LoveScribe',
-            subtitle: 'Seal your love for the future.',
-            placeholder: 'If the world ended tomorrow, what is the one memory of us that you would want to save from the fire?',
-            buttonText: 'SEAL OUR VOW',
-            gumroadLink: 'https://samzhu168.gumroad.com/l/sjuokv',
-            certificateTitle: 'CERTIFICATE OF ETERNAL LOVE'
-        },
-        'futurebloom-app.vercel.app': {
-            css: 'themes/theme-futurebloom.css',
-            title: 'FutureBloom',
-            subtitle: 'A letter to your child\'s 18th birthday.',
-            placeholder: 'When they are old enough to understand, what is the courage you want them to find in your words?',
-            buttonText: 'SEND TO THE FUTURE',
-            gumroadLink: 'https://samzhu168.gumroad.com/l/htoqgu',
-            certificateTitle: 'LETTER TO THE FUTURE'
-        },
-
-        // --- 本地测试域名 ---
-        '127.0.0.1': { 
-            css: 'themes/theme-echobox.css',
-            title: 'The Echo Box (Test)',
-            subtitle: 'Leave an echo, not just a memory.',
-            placeholder: 'In the silence between your victories, what is the one truth you fear might die with you?',
-            buttonText: 'IMPRINT INTO ETERNITY',
-            gumroadLink: 'https://samzhu168.gumroad.com/l/fmrrxr',
-            certificateTitle: 'CERTIFICATE OF LEGACY'
-        },
-        'localhost': { 
-            css: 'themes/theme-echobox.css',
-            title: 'The Echo Box (Local)',
-            subtitle: 'Leave an echo, not just a memory.',
-            placeholder: 'In the silence between your victories, what is the one truth you fear might die with you?',
-            buttonText: 'IMPRINT INTO ETERNITY',
-            gumroadLink: 'https://samzhu168.gumroad.com/l/fmrrxr',
-            certificateTitle: 'CERTIFICATE OF LEGACY'
+    function getTheme() {
+        const hostname = window.location.hostname.toLowerCase();
+        
+        // LoveScribe - 包含 "lovescribe" 关键词
+        if (hostname.includes('lovescribe')) {
+            return {
+                css: 'themes/theme-lovescribe.css',
+                title: 'LoveScribe',
+                subtitle: 'Seal your love for the future.',
+                placeholder: 'If the world ended tomorrow, what is the one memory of us that you would want to save from the fire?',
+                buttonText: 'SEAL OUR VOW',
+                gumroadLink: 'https://samzhu168.gumroad.com/l/sjuokv',
+                certificateTitle: 'CERTIFICATE OF ETERNAL LOVE'
+            };
         }
-    };
+        
+        // FutureBloom - 包含 "futurebloom" 关键词
+        if (hostname.includes('futurebloom')) {
+            return {
+                css: 'themes/theme-futurebloom.css',
+                title: 'FutureBloom',
+                subtitle: 'A letter to your child\'s 18th birthday.',
+                placeholder: 'When they are old enough to understand, what is the courage you want them to find in your words?',
+                buttonText: 'SEND TO THE FUTURE',
+                gumroadLink: 'https://samzhu168.gumroad.com/l/htoqgu',
+                certificateTitle: 'LETTER TO THE FUTURE'
+            };
+        }
+        
+        // The Echo Box - 默认主题（包括所有其他域名）
+        return {
+            css: 'themes/theme-echobox.css',
+            title: 'The Echo Box',
+            subtitle: 'Leave an echo, not just a memory.',
+            placeholder: 'In the silence between your victories, what is the one truth you fear might die with you?',
+            buttonText: 'IMPRINT INTO ETERNITY',
+            gumroadLink: 'https://samzhu168.gumroad.com/l/fmrrxr',
+            certificateTitle: 'CERTIFICATE OF LEGACY'
+        };
+    }
     
-    // 默认主题（防止直接用未知域名访问）
-    const defaultTheme = themes['the-echo-box.vercel.app'];
-    const currentTheme = themes[currentDomain] || defaultTheme;
-    
+    const currentTheme = getTheme();
+
     // =======================================================
     // 2. 动态注入皮肤和内容 (Dynamic Injection)
     // =======================================================
     function applyTheme(theme) {
-        // 1. 动态加载CSS
         const head = document.head;
         const existingTheme = document.getElementById('theme-stylesheet');
         if (existingTheme) {
@@ -115,14 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
             head.appendChild(link);
         }
 
-        // 2. 动态修改HTML内容
         document.title = theme.title;
         document.querySelector('header h1').innerText = theme.title;
         document.querySelector('header .subtitle').innerText = theme.subtitle;
         document.getElementById('legacy-text').placeholder = theme.placeholder;
         document.getElementById('imprint-button').innerText = theme.buttonText;
         
-        // 3. 动态设置 Gumroad 链接
         const paymentButton = document.querySelector('.payment-button');
         if (paymentButton && theme.gumroadLink) {
             paymentButton.href = theme.gumroadLink;
@@ -145,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
     let isSubmitting = false;
 
-    // 加载消息轮播
     const loadingMessages = [
         "Imprinting into the digital ether...",
         "Sealing your words in time...",
@@ -259,7 +210,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         ctx.fillStyle = '#e0e0e0';
         ctx.font = '22px Inter, sans-serif';
-        ctx.textAlign = 'left';
         wrapText(ctx, text, 120, 260, width - 240, 32);
         
         const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -293,7 +243,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // 装饰性角落图案
     function drawCornerOrnaments() {
         ctx.strokeStyle = '#D4AF37';
         ctx.lineWidth = 2;
@@ -301,28 +250,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const offset = 80;
         const size = 20;
 
-        // Top-left
         ctx.beginPath();
         ctx.moveTo(offset + size, offset);
         ctx.lineTo(offset, offset);
         ctx.lineTo(offset, offset + size);
         ctx.stroke();
 
-        // Top-right
         ctx.beginPath();
         ctx.moveTo(canvas.width - offset - size, offset);
         ctx.lineTo(canvas.width - offset, offset);
         ctx.lineTo(canvas.width - offset, offset + size);
         ctx.stroke();
 
-        // Bottom-left
         ctx.beginPath();
         ctx.moveTo(offset + size, canvas.height - offset);
         ctx.lineTo(offset, canvas.height - offset);
         ctx.lineTo(offset, canvas.height - offset - size);
         ctx.stroke();
 
-        // Bottom-right
         ctx.beginPath();
         ctx.moveTo(canvas.width - offset - size, canvas.height - offset);
         ctx.lineTo(canvas.width - offset, canvas.height - offset);
@@ -339,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let lineCount = 0;
         const maxLines = 8;
         
-        context.textAlign = 'center'; // Center the text within the column
+        context.textAlign = 'center';
         x = x + maxWidth / 2;
 
         for (let n = 0; n < words.length; n++) {
@@ -377,9 +322,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // =======================================================
     // 7. 错误处理和日志
     // =======================================================
-    console.log(`Theme loaded: ${currentTheme.title}`);
-    console.log(`Domain: ${currentDomain}`);
-    console.log(`Gumroad Link: ${currentTheme.gumroadLink}`);
+    console.log(`✅ Theme loaded: ${currentTheme.title}`);
+    console.log(`🌐 Domain: ${window.location.hostname}`);
+    console.log(`💳 Gumroad Link: ${currentTheme.gumroadLink}`);
     
     window.addEventListener('error', (event) => {
         console.error('Application error:', event.error, event.message);
