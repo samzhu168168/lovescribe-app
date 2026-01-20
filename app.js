@@ -1,13 +1,18 @@
 // ===================================
-// The Echo Box - 使用在线背景图版本
-// 不需要本地 assets 文件夹
+// The Echo Box - Complete JavaScript
+// Version: 6.0 - 星空背景升级版
+// Last Updated: January 2026
 // ===================================
 
 document.addEventListener('DOMContentLoaded', () => {
     
+    // =======================================================
+    // 1. 环境判官 (Smart Domain Detection)
+    // =======================================================
     function getTheme() {
         const hostname = window.location.hostname.toLowerCase();
         
+        // LoveScribe - 包含 "lovescribe" 关键词
         if (hostname.includes('lovescribe')) {
             return {
                 css: 'themes/theme-lovescribe.css',
@@ -17,11 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 buttonText: 'SEAL OUR VOW',
                 gumroadLink: 'https://samzhu168.gumroad.com/l/sjuokv',
                 certificateTitle: 'CERTIFICATE OF ETERNAL LOVE',
-                // ✅ 使用在线图片
-                backgroundImage: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=1920&h=1080&fit=crop'
+                // ✅ 爱心光晕背景（保持不变，效果好）
+                backgroundImage: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=1920&h=1080&fit=crop&q=80'
             };
         }
         
+        // FutureBloom - 包含 "futurebloom" 关键词
         if (hostname.includes('futurebloom')) {
             return {
                 css: 'themes/theme-futurebloom.css',
@@ -31,10 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 buttonText: 'SEND TO THE FUTURE',
                 gumroadLink: 'https://samzhu168.gumroad.com/l/htoqgu',
                 certificateTitle: 'LETTER TO THE FUTURE',
-                backgroundImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop'
+                // ✅ 海滩日出背景（保持不变，视觉最佳）
+                backgroundImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop&q=80'
             };
         }
         
+        // The Echo Box - 默认主题（包括所有其他域名）
         return {
             css: 'themes/theme-echobox.css',
             title: 'The Echo Box',
@@ -43,12 +51,16 @@ document.addEventListener('DOMContentLoaded', () => {
             buttonText: 'IMPRINT INTO ETERNITY',
             gumroadLink: 'https://samzhu168.gumroad.com/l/fmrrxr',
             certificateTitle: 'CERTIFICATE OF LEGACY',
-            backgroundImage: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920&h=1080&fit=crop'
+            // ✅✅✅ 升级：星空背景（神秘 + 永恒 + 高端）
+            backgroundImage: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=1920&h=1080&fit=crop&q=80'
         };
     }
     
     const currentTheme = getTheme();
 
+    // =======================================================
+    // 2. 动态注入皮肤和内容 (Dynamic Injection)
+    // =======================================================
     function applyTheme(theme) {
         const head = document.head;
         const existingTheme = document.getElementById('theme-stylesheet');
@@ -74,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             paymentButton.href = theme.gumroadLink;
         }
         
-        // ✅ 设置背景图 - 直接使用完整 URL
+        // ✅ 设置背景图
         if (theme.backgroundImage) {
             document.body.style.backgroundImage = `url('${theme.backgroundImage}')`;
             document.body.style.backgroundSize = 'cover';
@@ -86,8 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     applyTheme(currentTheme);
 
-    // ==================== 以下是原有功能代码 ====================
-    
+    // =======================================================
+    // 3. 核心应用逻辑 (Core Application Logic)
+    // =======================================================
     const imprintButton = document.getElementById('imprint-button');
     const legacyText = document.getElementById('legacy-text');
     const resultSection = document.getElementById('result-section');
@@ -175,6 +188,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    // =======================================================
+    // 4. 证书生成函数 (完整实现)
+    // =======================================================
     function generateCertificate(text, withWatermark) {
         const width = canvas.width;
         const height = canvas.height;
@@ -274,6 +290,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.stroke();
     }
     
+    // =======================================================
+    // 5. 文本自动换行函数 (完整实现)
+    // =======================================================
     function wrapText(context, text, x, y, maxWidth, lineHeight) {
         const words = text.split(' ');
         let line = '';
@@ -305,12 +324,23 @@ document.addEventListener('DOMContentLoaded', () => {
         context.fillText(line.trim(), x, y);
     }
     
+    // =======================================================
+    // 6. 辅助函数
+    // =======================================================
     function generateCertificateId() {
         const prefix = currentTheme.title.substring(0, 2).toUpperCase();
         const timestamp = Date.now().toString(36).toUpperCase();
         const random = Math.random().toString(36).substring(2, 6).toUpperCase();
         return `${prefix}-${timestamp}-${random}`;
     }
+    
+    // =======================================================
+    // 7. 错误处理和日志
+    // =======================================================
+    console.log(`✅ Theme loaded: ${currentTheme.title}`);
+    console.log(`🌐 Domain: ${window.location.hostname}`);
+    console.log(`💳 Gumroad Link: ${currentTheme.gumroadLink}`);
+    console.log(`🖼️ Background Image: ${currentTheme.backgroundImage}`);
     
     window.addEventListener('error', (event) => {
         console.error('Application error:', event.error, event.message);
